@@ -24,8 +24,25 @@ let sanFranAirport =
             "coordinates":[-122.375,37.61899948120117]}}
 ]};
 
-// Grabbing our GeoJSON data.
-L.geoJSON(sanFranAirport).addTo(map);
+// Grabbing our GeoJSON data using onEachFeature
+L.geoJson(sanFranAirport, {
+    onEachFeature: function(feature, layer) {
+      console.log(layer);
+        layer.bindPopup();
+     }
+}).addTo(map);
+
+
+// Grabbing our GeoJSON data using pointToLayer function
+// L.geoJson(sanFranAirport, {
+//     // We turn each feature into a marker on the map.
+//     pointToLayer: function(feature, latlng) {
+//       console.log(feature);
+//       return L.marker(latlng).bindPopup("<h2>" + feature.properties.name + "</h2> <hr> <h3>" + feature.properties.city + "," + feature.properties.country + "</h3>"
+//       );
+//     }
+
+//   }).addTo(map);
 
 // Add tilelayer
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
